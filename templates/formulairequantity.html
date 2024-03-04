@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmation de commande{% endblock %}
+
+{% block content %}
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prédiction d'anomalies de rupture de stock de la commande dans le futur </title>
+
+    <style>
+        /* styles.css */
+        .ma-carte1 {
+            border: 1px solid #ccc; /* Bordure de base du formulaire */
+            transition: border 0.3s; /* Animation de transition pour la bordure */
+        }
+
+        .ma-carte1:hover {
+            border: 2px solid green; /* Bordure verte au survol du formulaire */
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1>Prédiction d'anomalies de rupture de stock dans le futur</h1> -->
+    <form method="post" action="{% url 'core:delivery-quantity-prediction' %}">
+        {% csrf_token %}
+        
+    
+
+        <!-- <div class="card-body"> -->
+            <div class="card-body ma-carte1">
+
+            <h5 class="card-title">Prédiction d'anomalies de rupture de stock de la commande dans le futur </h5>
+    
+ 
+<!-- 
+        <label for="type">type commande:</label>
+        <input type="number" name="type" id="type" required><br><br> -->
+
+        <!-- <div class="row mb-3">
+            <label for="id" class="col-sm-2 col-form-label">ID commande</label>
+            <div class="col-sm-4">
+                <input type="number" step="1" class="form-control" name="id" placeholder="Donner Identifiant de la commande " required min="1">
+            </div>
+        </div> -->
+
+        
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Le Type</label>
+
+            <!-- <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="City">
+              </div> -->
+            <div class="col-md-4">
+                <select class="form-select" aria-label="Default select example" name="type" required>
+                    <option value="1" {% if commande.type == 1 %}selected{% endif %}>Pièce</option>
+                    <option value="2" {% if commande.type == 2 %}selected{% endif %}>Tissus</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- <label for="date_creation">Date de création de la commande :</label> -->
+        <!-- <input type="date" name="date_creation" id="date_creation" required><br><br> -->
+
+
+        <div class="row mb-3">
+            <label for="inputDate" class="col-sm-2 col-form-label">Le Date de prédiction:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" name="date_creation" required>
+            </div>
+        </div>
+
+
+    
+        <!-- <input type="number" step="0.01" name="unit_cost" id="unit_cost" required><br><br> -->
+        
+        <div class="row mb-3">
+            <label for="inputPrice" class="col-sm-2 col-form-label">Prix unitaire :</label>
+            <!-- <label for="unit_cost">Prix unitaire :</label> -->
+            <div class="col-sm-4">
+                <input type="number" step="0.01" class="form-control" name="unit_cost" placeholder="Donner le prix unitaire en euro € " required min="0.01">
+            </div>
+        </div>
+
+
+        <!-- <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Prédiction :</label>
+            <div class="col-sm-4">
+                <p>{{ prediction_result }}</p>
+            </div>
+        </div>
+         -->
+         
+<!-- 
+         <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Résultat de la prédiction :</label>
+            <div class="col-sm-4">
+                <p>{{ prediction_result }}</p>
+            </div>
+        </div> -->
+
+
+
+<!--         
+        
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Anomalie de stock :</label>
+            <div class="col-sm-4">
+                {% if prediction_result == 1 %}
+                    <p>Il y a un risque de rupture de stocks
+                  </p>
+                {% else %}
+                    <p>Il n'y a pas de risque de rupture de stocks</p>
+                {% endif %}
+            </div>
+        </div> -->
+        
+
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Prédire</button>
+                    <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+             </div>
+        </div>
+  
+
+        <!-- <div class="text-center">
+            <button type="submit" class="btn btn-primary">Prédire</button>
+            <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+          </div> -->
+
+        <!-- <input type="submit" value="Prédire"> -->
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      
+
+</body>
+
+</html>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+

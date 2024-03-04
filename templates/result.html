@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmation de commande{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The list of orders</title>
+    {% load static %}
+
+
+
+
+
+<script>
+    function confirmerSuppression(button) {
+        var commandeId = button.getAttribute('data-commande-id');
+        console.log("Fonction confirmerSuppression appelée pour la commande ID :", commandeId);
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette commande ?")) {
+            var form = document.getElementById('supprimer-form-' + commandeId);
+            form.submit();
+        }
+    }
+</script>
+
+ <!-- Ajout de jQuery -->
+ <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+ <!-- Ajout de DataTables CSS -->
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+ 
+ <!-- Ajout de DataTables JS -->
+ <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>   
+</head>
+<body>
+
+
+    <script>
+        $(document).ready( function () {
+            $('.datatable-basic').DataTable();
+        } );
+        </script>
+
+
+    <h1>The list of orders</h1>
+    <div class="datatable-scroll">
+        <!-- <table class="table datatable-basic dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info"> -->
+            <table class="table datatable-basic dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+
+<thead>
+
+    <tr role="row">
+        <!-- <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+            ID		</th> -->
+		<th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+            Order ID 	</th>
+		<th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending">
+            Transport Method 	</th>
+	
+
+
+
+
+        <!-- <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">Distance</th> -->
+
+			<th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+                Country Code </th>
+		<th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending">
+            City      	</th>
+	
+		<th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+			Creation Date 
+		</th>
+			<th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+                Departure Date
+		</th>
+			<th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+                Confirmed Date  
+		</th>
+        <!-- <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+            Prix unitaire
+    </th>
+    <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+        Poids unitaire
+</th> -->
+
+
+
+<!-- <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+    Actions
+</th> -->
+<div class="col">
+    <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">Actions</th>
+</div>
+	</tr>
+    </thead>
+
+
+    <tbody> {% for commande in commandes %}
+        <tr role="row" class="even">
+            <!-- <td class="sorting_1">{{ commande.id }}</td> -->
+                <td class="sorting_1">{{ commande.id }}</td>
+                <td>{{ commande.transport_method }}</td>
+                    <!-- <td class="sorting_1">{{ commande.distance }}</td> -->
+                <td>{{ commande.vendor_CountryCode }}</td>
+                    <td class="sorting_1">{{ commande.vendor_poste }}</td>
+                <td>{{ commande.date_creation }}</td>
+                    <td class="sorting_1">{{ commande.date_depart}}</td>
+                <td>{{ commande.date_confirme }}</td>
+                <!-- <td class="sorting_1">{{ commande.unit_cost }}</td>
+                <td class="sorting_1">{{ commande.unitWeightKG }}</td> -->
+            
+                <td class="text-center">
+                <!-- <a class="btn btn-outline-primary" href="{% url 'core:modifier_commande' commande.id %}"><i class="bx-comment-edit"><b>Modifier</b></i></a>
+                <a class="btn btn-outline-danger"  href="{% url 'core:supprimer_commande' commande.id %}"> <i class="bxs-trash"></i><b>Supprimer</b></a> -->
+
+
+                <a class="btn btn-outline-primary" href="{% url 'core:modifier_commande' commande.id %}">
+                    <span class="d-flex align-items-center">
+                    <i class="bi bi-pencil-fill"></i>
+                     <b>Edit</b>
+                    </span>
+                </a>
+                <a class="btn btn-outline-danger" href="{% url 'core:supprimer_commande' commande.id %}">
+                    <span class="d-flex align-items-center">
+                    <i class="bi bi-trash"></i> <b>Delete</b>
+                    </span>
+                
+                </a>
+                </td>
+
+   
+        
+         
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+
+
+{% endblock %}
+
+
+
+
+	
+
+	
+
+
+
+

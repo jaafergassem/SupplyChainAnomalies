@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Validation de l'état de stock{% endblock %}
+
+{% block content %}
+<h1>Validation de l'état de stock</h1>
+<form method="post">
+    {% csrf_token %}
+    {% if commandes %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sélectionner</th>
+                <th>ID de commande</th>
+               
+                <th>Etat de Stocks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    
+                    <td>
+                        <input type="checkbox" name="commandes" value="{{ commande.id }}">
+                    </td>
+                    <td>{{ commande.id }}</td>
+                    <td>
+                        <select class="form-select" name="etat_stock_{{ commande.id }}">
+                            <option value="rupture">Rupture de stocks</option>
+                            <option value="en_stock">En stock</option>
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-secondary">Valider l'état de stock</button>
+
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        Toutes les commandes sont validées.
+    </div>
+    {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,74 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Validation de livraison{% endblock %}
+
+{% block content %}
+<h1>Validation de livraison</h1>
+<form method="post">
+    {% csrf_token %}
+    {% if commandes %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sélectionner</th>
+                <th>ID de commande</th>
+              
+                <th>Date de livraison</th>
+                <th>Statut de livraison</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    
+                    <td><input type="checkbox" name="commandes" value="{{ commande.id }}">  </td>
+                    <td>{{ commande.id }}</td>
+                 
+                  
+                    <td>   <b><p class="text-info">Date inconnu</p></b> </td>  <!-- Laissez vide pour les nouvelles commandes à mettre à jour -->
+                    <td>  <b><p class="text-info">État inconnu</p></b></td>
+                </tr>
+            {% endfor %}
+            {% for updated_commande in updated_commandes %}
+                <tr>
+                    <td></td>
+                    <td>{{ updated_commande.id }}</td>
+
+                    <td><b>{{ updated_commande.date_livraison }}</b></td>
+                    <td>
+                        {% if updated_commande.status_delivery == 1 %}
+                        <b><p class="text-danger"> Late_time_delivry</p></b>
+                    {% elif updated_commande.status_delivery == 2 %}
+                    <b><p class="text-primary">  On_time_delivry</p></b>
+                    {% else %}
+                    <p class="text-primary"> Advance_time_delivry
+                    {% endif %}
+                    
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <label for="date_livraison"><strong>Date de  validation de livraison :</strong></label>
+    <input type="date"  name="date_livraison" required>
+
+    <!-- <div class="row mb-1">
+        <label for="inputDate" class="col-sm-2 col-form-label">Saisie la date</label>
+        <div class="col-sm-2">
+            <input type="date" class="form-control" name="date_livraison" required>
+            
+        </div>
+        
+    </div> -->
+
+    <button type="submit" class="btn btn-secondary">Valider la livraison</button>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Toutes les commandes sont validées pour la livraison.
+        </div>
+    {% endif %}
+</form>
+{% endblock %}

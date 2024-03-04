@@ -1,0 +1,113 @@
+
+
+
+
+
+
+
+
+{% extends 'base.html' %}
+
+{% block title %}Resultat prédiction annomalie{% endblock %}
+
+{% block content %}
+<div class="tab-content pt-2">
+    <div class="tab-pane fade show active profile-overview" id="profile-overview" role="tabpanel">
+        <div class="card-details" onmouseover="this.style.border = '1px solid blue'" onmouseout="this.style.border = 'none'">
+
+    
+        <h5 class="card-title">Resultat prédiction annomalie au niveau de stock de la commande</h5>
+        <!-- <p>Visualiser le Resultat</p> -->
+        <div class="row">
+            <!-- <div class="col-lg-3 col-md-4 label"><b>ID commande</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.id }}</div> -->
+
+            <!-- <div class="col-lg-3 col-md-4 label"><b>Type</b> </div>
+            <div class="col-lg-9 col-md-8">{{ type }}</div> -->
+
+            <div class="col-lg-3 col-md-4 label"><b>Type</b> </div>
+            <div class="col-lg-9 col-md-8">
+                {% if type == 1 %}
+                    Pièce
+                {% else %}
+                    Tissus
+                {% endif %}
+            </div>
+
+
+            <div class="col-lg-3 col-md-4 label"><b>La date de prédiction</b></div>
+            <div class="col-lg-9 col-md-8">{{ date_creation }}</div>
+
+
+
+
+
+            <div class="col-lg-3 col-md-4 label"><b>Prix unitaire</b></div>
+            <div class="col-lg-9 col-md-8">{{ unit_cost }}</div>
+
+
+            
+        <!-- <div class="col-lg-3 col-md-4 label"><b>La prédiction d'annomalie est :</b></div>
+            <div class="col-lg-9 col-md-8">{{ prediction_result }}</div> -->
+
+            <div class="row mb-3">
+                <!-- <label class="col-sm-2 col-form-label">Anomalie de stock :</label> -->
+                <div class="col-lg-3 col-md-4 label"><b>La prédiction d'annomalie est :</b></div>
+                <div class="col-sm-4">
+                    {% if prediction_result == 1 %}
+                    <b><p class="text-danger">Il y a un risque de rupture de stocks
+                      </p></b> 
+                    {% else %}
+                       <b><p class="text-primary">Il n'y a pas de risque de rupture de stocks</p></b> 
+                    {% endif %}
+                </div>
+            </div> 
+            
+    
+
+    
+
+        </div>
+
+    
+
+  
+
+
+     
+    </div>
+</div>
+</div>
+<style>
+    .card-details {
+        /* border: none; */
+        /* transition: border 0.3s; */
+        padding: 15px;
+        margin: 15px;
+        border: 1px solid #ccc; /* Bordure de base du formulaire */
+        transition: border 0.3s; /* Animation de transition pour la bordure */
+    }
+
+    .card-details .row {
+        margin-bottom: 10px; /* Espace entre les lignes */
+    }
+    
+    .col-md-4.label,
+    .col-md-8 {
+        margin-bottom: 10px; /* Espace entre les étiquettes et les valeurs */
+    }
+</style>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau d'état de stock {% endblock %}
+
+{% block content %}
+<h1>Tableau de prévision de livraison</h1>
+
+
+
+
+<div id="notifications"></div>
+
+
+
+<form method="post" action="{% url 'core:tableaux-prediction-annomalie' %}">
+    {% csrf_token %}
+
+
+<div class="datatable-scroll">
+ 
+    <table class="table datatable-basic dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+<thead>
+
+<tr role="row">
+    <!-- <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+        ID		</th> -->
+
+    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+           Prédiction multiple 
+        		</th>
+    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+        ID	Commande	</th>
+    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending">
+        Méthode  transport		</th>
+
+    <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+        Distance
+    </th>
+        <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+            Code  pays		</th>
+    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending">
+        Ville du fournisseur	</th>
+
+    <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+        Date  création
+    </th>
+        <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+            Date  départ
+    </th>
+        <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+            Date confirmée
+    </th>
+    <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+        Prix unitaire
+</th>
+<th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+    Poids unitaire
+</th>
+<th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+    Prédiction
+</th>
+<!-- <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+Actions
+</th> -->
+</tr>
+</thead>
+    
+    
+  
+<tbody> {% for commande in commandes %}
+    <tr role="row" class="even">
+        <!-- <td class="sorting_1">{{ commande.id }}</td> -->
+        <td><input type="checkbox" name="commande_id" value="{{ commande.id }}"></td>
+        <td class="sorting_1">{{ commande.id }}</td> 
+            <!-- <td class="sorting_1">{{ commande.type }}</td> -->
+            <td>{{ commande.transport_method }}</td>
+                <td class="sorting_1">{{ commande.distance }}</td>
+            <td>{{ commande.vendor_CountryCode }}</td>
+                <td class="sorting_1">{{ commande.vendor_poste }}</td>
+            <td>{{ commande.date_creation }}</td>
+                <td class="sorting_1">{{ commande.date_depart }}</td>
+            <td>{{ commande.date_confirme }}</td>
+            <td class="sorting_1">{{ commande.unit_cost }}</td>
+            <td class="sorting_1">{{ commande.unitWeightKG }}</td>
+        
+            <!-- <td class="text-center">
+
+            <a class="btn btn-outline-primary" href="{% url 'core:modifier_commande' commande.id %}">
+                <span class="d-flex align-items-center">
+                <i class="bi bi-pencil-fill"></i>
+                 <b>Modifier</b>
+                </span>
+            </a>
+
+            <button class="btn btn-outline-primary"  type="submit">Prédire et Enregistrer</button>
+        
+            </td> -->
+
+
+            <td class="sorting_1">
+                
+ 
+                {% if commande.annomalie_stock == "1" %}
+                <b><p class="text-danger">Risque de rupture</p></b>
+            {% elif commande.annomalie_stock == "0" %}
+                <b><p class="text-primary">Pas de risque de rupture</p></b>
+            {% else %}
+                <b><p class="text-info">État inconnu</p></b>
+            {% endif %}
+
+            </td>
+
+    
+    
+        </tr>
+        {% endfor %}
+              
+    </tbody>
+</table>
+<button    class="btn btn-info"  type="submit">Prédire et Enregistrer</button>
+</div>
+<!-- class="btn btn-success" -->
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

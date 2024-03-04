@@ -1,0 +1,296 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Confirmation de commande{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer une commande</title>
+    {% load static %}
+
+
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Supply chain project</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+  
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Utilisez SweetAlert2 pour afficher une alerte
+      document.querySelector('#example-button').addEventListener('click', () => {
+        Swal.fire({
+          title: 'Good job!',
+          text: 'La commande est ajouté avec succées',
+          icon: 'success'
+          
+        });
+        setTimeout(() => {
+        window.location.href = '{% url "core:list_commandes" %}';
+      }, 10000);
+      });
+    });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('countrySelect').addEventListener('change', function() {
+                var country = this.value;
+                var distanceInput = document.getElementById('distance');
+                // Mettez à jour la distance en fonction du pays sélectionné
+                var distances = {
+                    'HK': 9000, 'TN': 450, 'MAR': 2116, 'IT': 1706,
+                    'FR': 2085, 'TR': 3403, 'ES': 2205, 'MX': 10399,
+                    'GR': 2031, 'BLG': 2411, 'IND': 6892, 'UK': 2430,
+                    'CH': 1712, 'ID': 11374, 'MC': 2116, 'NL': 2530,
+                    'PL': 2502 , 'DK': 2907
+                    // ... autres pays et distances
+                };
+                distanceInput.value = distances[country] || 0; // Mettre à jour la valeur ou 0 si le pays n'est pas trouvé
+            });
+        });
+        </script>
+
+</head>
+
+
+<body>
+    <div class="pagetitle">
+        <h1>Créer une commande</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Home</a></li>
+            <li class="breadcrumb-item active">Gérer commande</li>
+            <li class="breadcrumb-item active">Ajouter commande</li>
+          </ol>
+        </nav>
+      </div>
+
+
+  <!-- <div class="card-body"> -->
+    <div class="card-body ma-carte">
+        <br></br>
+      <!-- <h5 class="card-title">Créer une commande</h5> -->
+
+      <form method="post">
+          {% csrf_token %}
+          
+          <!-- <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">Type </label>
+              <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example" name="type">
+                      <option value="1" selected="">Piece</option>
+                      <option value="2">Fabrics</option>
+                  </select>
+              </div>
+          </div> -->
+
+          <!-- Champs pour la distance -->
+          <div class="row mb-3">
+              <label for="distance" class="col-sm-2 col-form-label">Distance</label>
+              <div class="col-sm-10">
+                  <!-- <input type="number" name="distance" id="distance" class="form-control"  placeholder="Donner la distance en kilomètres" required> -->
+                  <input type="number" name="distance" id="distance" class="form-control" placeholder="Provide the distance in kilometers" readonly required>
+
+              </div>
+          </div>
+
+          <!-- <div class="row mb-3">
+            <label for="type" class="col-sm-2 col-form-label">type</label>
+            <div class="col-sm-10">
+                <input type="number" name="type" id="type" class="form-control">
+            </div>
+        </div> -->
+
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Type</label>
+            <div class="col-sm-10">
+                <select class="form-select" aria-label="Default select example" name="type" required>
+                    <option value="1" {% if commande.type == 1 %}selected{% endif %}>Piece</option>
+                    <option value="2" {% if commande.type == 2 %}selected{% endif %}>Fabrics</option>
+                </select>
+            </div>
+        </div>
+
+
+    <div class="row mb-3">
+      <label for="vendor_poste" class="col-sm-2 col-form-label">Supplier City </label>
+      <div class="col-sm-10">
+          <input type="text" name="vendor_poste" id="vendor_poste" class="form-control" placeholder="Provide the supplier's city" required>
+      </div>
+  </div>
+
+
+
+  <!-- <div class="row mb-3">
+    <label for="transport_method" class="col-sm-2 col-form-label">Méthode de transport</label>
+    <div class="col-sm-10">
+        <input type="text" name="transport_method" id="transport_method" class="form-control">
+    </div>
+</div> -->
+
+
+
+  
+          <fieldset class="row mb-3">
+              <legend class="col-form-label col-sm-2 pt-0">Transportation Method</legend>
+              <div class="col-sm-10">
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="transport_method" id="transport_method" value="Camion" checked="" >
+                      <label class="form-check-label" for="transport_method">
+                        Truck
+                      </label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="transport_method" id="transport_method" value="Bateau">
+                      <label class="form-check-label" for="transport_method">
+                        Ship
+                      </label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="transport_method" id="transport_method" value="Avion">
+                      <label class="form-check-label" for="transport_method">
+                        Airplane
+                      </label>
+                  </div>
+              </div>
+          </fieldset> 
+
+
+<!--           
+      <div class="row mb-3">
+        <label for="vendor_CountryCode" class="col-sm-2 col-form-label">Le pays de fournisseur</label>
+        <div class="col-sm-10">
+            <input type="text" name="vendor_CountryCode" id="vendor_CountryCode" class="form-control">
+        </div>
+    </div> -->
+          <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">Supplier Country Code</label>
+              <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example" name="vendor_CountryCode" id="countrySelect" required>
+                      <option value="TN" selected="">TN</option>
+                      <option value="IT">IT</option>
+                      <option value="FR">FR</option>
+                      <option value="TR">TR</option>
+                      <option value="HK">HK</option>
+                      <option value="ES">ES</option>
+                      <option value="MX">MX</option>
+                      <option value="GR">GR</option>
+                      <option value="BLG">BLG</option>
+                      <option value="IND">IND</option>
+                      <option value="UK">UK</option>
+                      <option value="CH">CH</option>
+                      <option value="ID">ID</option>
+                      <option value="MAR">MAR</option>
+                      <option value="NL">NL</option>
+                      <option value="DK">DK</option>
+                      <option value="PL">PL</option>
+                      
+                  </select>
+              </div>
+          </div>
+
+          <!-- Champs pour la date de création -->
+          <div class="row mb-3">
+              <label for="inputDate" class="col-sm-2 col-form-label">Creation Date</label>
+              <div class="col-sm-10">
+                  <input type="date" class="form-control" name="date_creation">
+              </div>
+          </div>
+
+          <!-- Champs pour la date de départ du fournisseur -->
+          <div class="row mb-3">
+              <label for="inputDate" class="col-sm-2 col-form-label">Supplier Departure Date</label>
+              <div class="col-sm-10">
+                  <input type="date" class="form-control" name="date_depart" required>
+              </div>
+          </div>
+
+          <!-- Champs pour la date confirmée par le fournisseur -->
+          <div class="row mb-3">
+              <label for="inputDate" class="col-sm-2 col-form-label">Confirmed Date by Supplier </label>
+              <div class="col-sm-10">
+                  <input type="date" class="form-control" name="date_confirme" required>
+              </div>
+          </div>
+
+          <!-- Champs pour le prix unitaire de la commande -->
+          <div class="row mb-3">
+              <label for="inputPrice" class="col-sm-2 col-form-label">Unit Price of the Order </label>
+              <div class="col-sm-10">
+                  <input type="number" step="0.01" class="form-control" name="unit_cost" placeholder="Provide the unit price of the order in euros €" required min="0.01">
+              </div>
+          </div>
+
+          <!-- Champs pour le poids unitaire de la commande en KG -->
+          <div class="row mb-3">
+              <label for="inputWeight" class="col-sm-2 col-form-label">Unit Weight of the Order</label>
+              <div class="col-sm-10">
+                  <input type="number" step="0.001" class="form-control" name="unitWeightKG"  placeholder="Provide the unit weight of the order in KG" required min="0.001">
+              </div>
+          </div>
+
+
+
+           <div class="row mb-3">
+            <label for="inputquantite" class="col-sm-2 col-form-label">Ordered Quantity of the Order </label>
+            <div class="col-sm-10">
+                <input type="number" step="1" class="form-control" name="quantite_commande"  placeholder="Provide the ordered quantity" required min="1">
+            </div>
+        </div>
+
+          <!-- Bouton de validation -->
+          <div class="row mb-3">
+              <label class="col-sm-2 col-form-label"></label>
+              <div class="col-sm-10">
+                  <button id="example-button" type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <!-- <div class="alert alert-primary" role="alert">
+                    This is a primary alert—check it out!
+                  </div> -->
+              </div>
+          </div>
+      </form>
+
+      {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Erreurs de validation :</strong>
+        <ul>
+            {% for field, errors in form.errors.items %}
+                <li>{{ field }} : {{ errors }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+  </div>
+</body>
+</html>
+<style>
+
+
+/* styles.css */
+.ma-carte {
+    border: 1px solid #ccc; /* Bordure de base de la carte */
+    transition: border 0.3s; /* Animation de transition pour la bordure */
+}
+
+.ma-carte:hover {
+    border: 2px solid blue; /* Bordure bleue au survol de la carte */
+}
+
+
+</style>
+{% endblock %}
+

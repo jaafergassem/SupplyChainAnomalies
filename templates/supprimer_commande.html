@@ -1,0 +1,109 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Confirmation de commande{% endblock %}
+
+{% block content %}
+<div class="tab-content pt-2">
+    <div class="tab-pane fade show active profile-overview" id="profile-overview" role="tabpanel">
+        <div class="card-details" onmouseover="this.style.border = '1px solid red'" onmouseout="this.style.border = 'none'">
+        <h5 class="card-title">Supprimer la commande</h5>
+        <p>Êtes-vous sûr de vouloir supprimer cette commande ?</p>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 label"><b>ID commande</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.id }}</div>
+
+            <div class="col-lg-3 col-md-4 label"><b>Distance</b> </div>
+            <div class="col-lg-9 col-md-8">{{ commande.distance }}</div>
+
+
+            <div class="col-lg-3 col-md-4 label"><b>vendor_poste</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.vendor_poste }}</div>
+
+
+            <div class="col-lg-3 col-md-4 label"><b>transport_method</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.transport_method }}</div>
+
+
+            <div class="col-lg-3 col-md-4 label"><b>vendor_CountryCode</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.vendor_CountryCode }}</div>
+
+
+            <div class="col-lg-3 col-md-4 label"><b>date_creation</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.date_creation }}</div>
+
+
+            <div class="col-lg-3 col-md-4 label"> <b>date_creation</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.date_depart }}</div>
+
+            <div class="col-lg-3 col-md-4 label"><b>date_confirme</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.date_confirme }}</div>
+
+
+            <div class="col-lg-3 col-md-4 label"><b>Prix unitaire</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.unit_cost }}</div>
+
+            <div class="col-lg-3 col-md-4 label"><b>Poids unitaire</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.unitWeightKG }}</div>
+
+            
+            <div class="col-lg-3 col-md-4 label"><b>Quantité Commandé</b></div>
+            <div class="col-lg-9 col-md-8">{{ commande.quantite_commande }}</div>
+    
+
+        </div>
+
+    
+
+
+        <form method="post" action="{% url 'core:supprimer_commande' commande.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" id="example-button-suppression">Confirmer la suppression</button>
+
+            <a href="#" class="btn btn-secondary" onclick="history.back(); return false;">Annuler la suppression</a>
+
+        </form>
+    </div>
+</div>
+</div>
+<style>
+    .card-details {
+        border: none;
+        transition: border 0.3s;
+        padding: 15px;
+        margin: 15px;
+    }
+
+    .card-details .row {
+        margin-bottom: 10px; 
+    }
+    
+    .col-md-4.label,
+    .col-md-8 {
+        margin-bottom: 10px; 
+    }
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector('#example-button-suppression').addEventListener('click', () => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Suppression',
+      text: 'La Commande est supprimée avec succées!',
+    });
+  });
+});
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+

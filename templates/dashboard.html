@@ -1,0 +1,193 @@
+
+
+
+
+
+
+
+
+
+
+
+
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <!-- Contenu spécifique à la page du tableau de bord -->
+
+    <!-- Section horizontale supérieure -->
+    <div class="row">
+      <div class="col-md-6">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Section verticale inférieure -->
+    <div class="row">
+      <!-- Carte KPI Livraison -->
+<div class="col-md-6">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">KPI Livraison</h3>
+      <div id="pieChart" style="min-height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" class="echart" _echarts_instance_="ec_1697570881870">
+        <div style="position: relative; width: 714px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+          <canvas data-zr-dom-id="zr_0" width="714" height="400" style="position: absolute; left: 0px; top: 0px; width: 714px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const pieChart = echarts.init(document.querySelector("#pieChart"));
+        // Récupérez les données initiales de votre modèle Django
+        const initialData = {{ initial_data|safe }};
+        
+        // Configurez le graphique avec les données initiales
+        const pieData = [
+          { value: initialData.Advance_time_delivry, name: 'Advance_time_delivry' },
+          { value: initialData.On_time_delivry, name: 'On_time_delivry' },
+          { value: initialData.Late_time_delivry, name: 'Late_time_delivry' }
+        ];
+    
+        pieChart.setOption({
+          title: {
+            left: 'center'
+          },
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left'
+          },
+          series: [{
+            name: 'KPI Livraison',
+            type: 'pie',
+            radius: '50%',
+            data: pieData,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }]
+        });
+      });
+    </script>
+  </div>
+</div>
+
+
+<div class="col-md-6">
+  <!-- Carte KPI Stocks -->
+  <div class="card">
+      <div class="card-body">
+          <h5 class="card-title">KPI Stocks</h5>
+          <div id="donutChart" style="min-height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" class="echart" _echarts_instance_="ec_1697978669990">
+            <!-- Contenu de la carte KPI Stocks -->
+          </div>
+      </div>
+
+           <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const donutChart = echarts.init(document.querySelector("#donutChart"));
+
+        // Récupérez les données initiales de votre modèle Django
+        const initialData = {{ initial_data|safe }};
+
+        // Configurez le graphique avec les données initiales
+        const donutData = [
+          { value: initialData.en_stock, name: 'En Stock' },
+          { value: initialData.rupture, name: 'Rupture de Stock' },
+        ];
+
+        donutChart.setOption({
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            top: '5%',
+            left: 'center'
+          },
+          series: [
+            {
+              name: 'Stocks',
+              type: 'pie',
+              radius: ['40%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '18',
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: donutData,
+            },
+          ],
+        });
+      });
+    </script>
+          <!-- Fin du Donut Chart -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+          
+            <div class="row">
+              <div class="col-md-10">
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Localisation des commande</h3>
+                  </div>
+                  <iframe title="Report Section" width="800" height="500" src="https://app.powerbi.com/view?r=eyJrIjoiMDk4ZDI3OGQtMjkzNy00MTcyLWI4ZWEtOWNjYzU4YzQ3NDRkIiwidCI6ImRiZDY2NjRkLTRlYjktNDZlYi05OWQ4LTVjNDNiYTE1M2M2MSIsImMiOjl9" frameborder="0" allowFullScreen="true"></iframe>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Les nombres descommande par Pays</h3>
+                  <iframe title="Report Section" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNDlhOWI2YWEtMTE1ZS00YmY1LTg2ODMtNGU5NTVjOWE0MmI5IiwidCI6ImRiZDY2NjRkLTRlYjktNDZlYi05OWQ4LTVjNDNiYTE1M2M2MSIsImMiOjl9&pageName=ReportSection90e1d08902caae9fa22e" frameborder="0" allowFullScreen="true"></iframe>                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <!-- <div class="col-md-8">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">Les prix unitaire des commandes par Id</h3>
+                <iframe title="Report Section" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiN2UxMWFmYTMtOWNhZi00N2Y3LTg0YzUtNTYwODFhYmVlNTZkIiwidCI6ImRiZDY2NjRkLTRlYjktNDZlYi05OWQ4LTVjNDNiYTE1M2M2MSIsImMiOjl9" frameborder="0" allowFullScreen="true"></iframe>            </div>
+          </div>
+        </div> -->
+          
+  </div>
+{% endblock %}
